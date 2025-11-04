@@ -1,4 +1,6 @@
-﻿using FlightBookingDomain.Entities;
+﻿using FlightBookingApplication.Common;
+using FlightBookingApplication.DTOs.Search;
+using FlightBookingDomain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FlightBookingApplication.Interfaces
 {
-    public interface IFlightService
+    public interface IFlightSearchService
     {
-        Task<List<FlightEntity>> SearchFlightsAsync(FlightSearchEntity search);
-        
+        Task<Result<SearchResponseDto>> SearchFlightsAsync(SearchRequestDto request, CancellationToken ct = default);
+
     }
 }
