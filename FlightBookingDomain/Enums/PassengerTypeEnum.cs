@@ -8,9 +8,9 @@ namespace FlightBookingDomain.Enums
 {
     public enum PassengerTypeEnum
     {
-        Baby = 1,
-        Child = 2,
-        Adult = 3
+        Infant,
+        Child,
+        Adult
 
     }
 }

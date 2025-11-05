@@ -1,7 +1,9 @@
 ﻿using FlightBookingApplication.Common;
 using FlightBookingApplication.DTOs.Search;
 using FlightBookingApplication.Interfaces;
+using FlightBookingApplication.Validators;
 using FlightBookingDomain.Entities;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,21 @@ namespace FlightBookingApplication.Services
 {
     public class FlightService : IFlightSearchService
     {
-        public FlightService()
+        private readonly IValidator<SearchRequestDto> _validator;
+        
+        public FlightService(IValidator<SearchRequestDto> validator)
         {
+            _validator = validator;
         }
 
-        public Task<Result<SearchResponseDto>> SearchFlightsAsync(SearchRequestDto request, CancellationToken ct = default)
+        public async Task<Result<SearchResponseDto>> SearchFlightsAsync(SearchRequestDto request, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Validation = await _validator.ValidateAsync(request, ct);
+            if (!Validation.IsValid)
+            {
+                throw new CustomValidationException(Validation.Errors.Select(e => e.ErrorMessage));
+            }
+            return Result<SearchResponseDto>.Success();
         }
     }
 }
