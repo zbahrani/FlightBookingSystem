@@ -27,27 +27,28 @@ namespace FlightBookingApplication.Services
         {
             var Validation = await _validator.ValidateAsync(request, ct);
             if (!Validation.IsValid)
-            {
-                throw new CustomValidationException(Validation.Errors.Select(e => e.ErrorMessage));
-                var external = await _airtour.SearchAvailabilitAsync(request, ct);
-                var dto = new SearchResponseDto
-                {
-                    Success = true,
-                    flights = external.Select(f => new FlightOptionDto
-                    {
-                        FlightNumber = f.,
-                        Airline = f.Airline,
-                        Origin = f.Origin,
-                        Destination = f.Destination,
-                        Departure = f.Departure,
-                        Arrival = f.Arrival,
-                        TotalPrice = f.TotalPrice
-                    }).ToList()
-                };
-                return Result<SearchResponseDto>.Success(dto);
+            {    throw new CustomValidationException(Validation.Errors.Select(e => e.ErrorMessage));
+                }
+            var external = await _airtour.SearchAvailabilityAsync(request, ct);
 
-            }
-            
+            var dto = new SearchResponseDto
+            {
+                Success = true,
+                Flights = external.Select(f => new FlightOptionDto
+                {
+                    FlightNumber = f.FlightNumber,
+                    Airline = f.Airline,
+                    Origin = f.Origin,
+                    Destination = f.Destination,
+                    Departure = f.Departure,
+                    Arrival = f.Arrival,
+                    TotalPrice = f.TotalPrice
+                }).ToList()
+            };
+
+            return Result<SearchResponseDto>.Success(dto);
+
+
         }
     }
 }

@@ -11,7 +11,7 @@ namespace FlightBookingApplication.Interfaces
 {
     public interface IAirtourHttpClientService
     {
-        Task<List<SearchResponseDto>> SearchAvailabilitAsync(SearchRequestDto request, CancellationToken ct = default);
+        Task<List<FlightOptionDto>> SearchAvailabilityAsync(SearchRequestDto request, CancellationToken ct = default);
         Task<BookResponseDto> BookAsync(BookRequestDto request, CancellationToken ct = default);
         Task<IssueResponseDto> IssueAsync(IssueRequestDto request, CancellationToken ct = default); 
     }

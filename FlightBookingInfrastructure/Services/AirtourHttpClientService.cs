@@ -55,6 +55,7 @@ namespace FlightBookingInfrastructure.Services
             try
             {
                 var doc = JsonDocument.Parse(raw);
+ 
                 var bookingRef = doc.RootElement.GetProperty("AirReservation").GetProperty("RecordLocator").GetString();
                 return new BookResponseDto { Success = true, BookingReference = bookingRef ?? Guid.NewGuid().ToString(), TotalAmount = 0, Message = "Booked via Airtour" };
             }
@@ -70,7 +71,8 @@ namespace FlightBookingInfrastructure.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<SearchResponseDto>> SearchAvailabilitAsync(SearchRequestDto request, CancellationToken ct = default)
+        
+        public Task<List<FlightOptionDto>> SearchAvailabilityAsync(SearchRequestDto request, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }
