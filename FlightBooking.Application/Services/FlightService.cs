@@ -15,10 +15,12 @@ namespace FlightBookingApplication.Services
     public class FlightService : IFlightSearchService
     {
         private readonly IValidator<SearchRequestDto> _validator;
-        
-        public FlightService(IValidator<SearchRequestDto> validator)
+        private readonly IAirtourHttpClientService _airtour;
+
+        public FlightService(IValidator<SearchRequestDto> validator, IAirtourHttpClientService airtour)
         {
             _validator = validator;
+            _airtour = airtour;
         }
 
         public async Task<Result<SearchResponseDto>> SearchFlightsAsync(SearchRequestDto request, CancellationToken ct = default)
@@ -27,8 +29,25 @@ namespace FlightBookingApplication.Services
             if (!Validation.IsValid)
             {
                 throw new CustomValidationException(Validation.Errors.Select(e => e.ErrorMessage));
+                var external = await _airtour.SearchAvailabilitAsync(request, ct);
+                var dto = new SearchResponseDto
+                {
+                    Success = true,
+                    flights = external.Select(f => new FlightOptionDto
+                    {
+                        FlightNumber = f.,
+                        Airline = f.Airline,
+                        Origin = f.Origin,
+                        Destination = f.Destination,
+                        Departure = f.Departure,
+                        Arrival = f.Arrival,
+                        TotalPrice = f.TotalPrice
+                    }).ToList()
+                };
+                return Result<SearchResponseDto>.Success(dto);
+
             }
-            return Result<SearchResponseDto>.Success();
+            
         }
     }
 }
