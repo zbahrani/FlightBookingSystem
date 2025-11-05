@@ -2,7 +2,6 @@
 using FlightBookingApplication.DTOs.Search;
 using FlightBookingApplication.Interfaces;
 using FlightBookingApplication.Validators;
-using FlightBookingDomain.Entities;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -12,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace FlightBookingApplication.Services
 {
-    public class FlightService : IFlightSearchService
+    public class FlightSearchService : IFlightSearchService
     {
         private readonly IValidator<SearchRequestDto> _validator;
         private readonly IAirtourHttpClientService _airtour;
 
-        public FlightService(IValidator<SearchRequestDto> validator, IAirtourHttpClientService airtour)
+        public FlightSearchService(IValidator<SearchRequestDto> validator, IAirtourHttpClientService airtour)
         {
             _validator = validator;
             _airtour = airtour;
@@ -34,17 +33,9 @@ namespace FlightBookingApplication.Services
             var dto = new SearchResponseDto
             {
                 Success = true,
-                Flights = external.Select(f => new FlightOptionDto
-                {
-                    FlightNumber = f.FlightNumber,
-                    Airline = f.Airline,
-                    Origin = f.Origin,
-                    Destination = f.Destination,
-                    Departure = f.Departure,
-                    Arrival = f.Arrival,
-                    TotalPrice = f.TotalPrice
-                }).ToList()
+                Flights = external 
             };
+
 
             return Result<SearchResponseDto>.Success(dto);
 
