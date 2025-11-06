@@ -3,13 +3,9 @@ using FlightBookingApplication.DTOs.Issue;
 using FlightBookingApplication.DTOs.Search;
 using FlightBookingApplication.Interfaces;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+
 
 namespace FlightBookingInfrastructure.Services
 {
@@ -54,7 +50,7 @@ namespace FlightBookingInfrastructure.Services
                         TotalFare = new { Amount = request.Price }
                     }
                 },
-                TravelerInfo = request.passengers.Select(p => new
+                TravelerInfo = request.Passengers.Select(p => new
                 {
                     PersonName = new { GivenName = p.FirstName, Surname = p.LastName },
                     BirthDate = p.BirthDate.ToString("yyyy-MM-dd"),

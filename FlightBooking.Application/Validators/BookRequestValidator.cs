@@ -1,11 +1,6 @@
 ﻿using FlightBookingApplication.DTOs.Booking;
 using FlightBookingDomain.Enums;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;  
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightBookingApplication.Validators
 {
@@ -14,8 +9,8 @@ namespace FlightBookingApplication.Validators
         public BookRequestValidator() 
         {
             RuleFor(x => x.FlightNumber).NotEmpty().WithMessage("شماره پرواز الزامی است.");
-            RuleFor(x => x.passengers).NotEmpty().WithMessage("لیست مسافران خالی است.");
-            RuleForEach(x => x.passengers).ChildRules(p =>
+            RuleFor(x => x.Passengers).NotEmpty().WithMessage("لیست مسافران خالی است.");
+            RuleForEach(x => x.Passengers).ChildRules(p =>
             {
                 p.RuleFor(pp => pp.FirstName).NotEmpty().WithMessage("نام مسافر الزامی است.");
                 p.RuleFor(pp => pp.LastName).NotEmpty().WithMessage("نام خانوادگی مسافر الزامی است.");

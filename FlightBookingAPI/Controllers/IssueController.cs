@@ -1,6 +1,5 @@
 ﻿using FlightBookingApplication.DTOs.Issue;
 using FlightBookingApplication.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightBookingAPI.Controllers
