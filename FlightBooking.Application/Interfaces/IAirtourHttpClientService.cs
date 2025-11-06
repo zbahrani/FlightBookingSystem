@@ -13,6 +13,6 @@ namespace FlightBookingApplication.Interfaces
     {
         Task<List<FlightOptionDto>> SearchAvailabilityAsync(SearchRequestDto request, CancellationToken ct = default);
         Task<BookResponseDto> BookAsync(BookRequestDto request, CancellationToken ct = default);
-        //Task<IssueResponseDto> IssueAsync(IssueRequestDto request, CancellationToken ct = default); 
+        Task<IssueResponseDto> IssueAsync(IssueRequestDto request, CancellationToken ct = default); 
     }
 }

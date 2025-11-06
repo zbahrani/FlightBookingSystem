@@ -111,10 +111,48 @@ namespace FlightBookingInfrastructure.Services
                 };
             }
         }
-        //public Task<IssueResponseDto> IssueAsync(IssueRequestDto request, CancellationToken ct = default)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<IssueResponseDto> IssueAsync(IssueRequestDto request, CancellationToken ct = default)
+        {
+            var baseUrl = _config["AirtourApi:BaseUrl"];
+            var url = $"{baseUrl}/Air_Issue";
+
+            var payload = new
+            {
+                POS = new
+                {
+                    UserName = _config["AirtourApi:Username"],
+                    Password = _config["AirtourApi:Password"]
+                },
+                BookingReferenceID = request.BookingReference
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            var resp = await _http.PostAsync(url, content, ct);
+            resp.EnsureSuccessStatusCode();
+
+            var body = await resp.Content.ReadAsStringAsync(ct);
+            var doc = JsonDocument.Parse(body);
+
+            try
+            {
+                var ticket = doc.RootElement.GetProperty("TicketDocumentNbr").GetString();
+                return new IssueResponseDto
+                {
+                    Success = true,
+                    TicketNumber = ticket ?? Guid.NewGuid().ToString(),
+                    Message = "Ticket issued successfully"
+                };
+            }
+            catch
+            {
+                return new IssueResponseDto
+                {
+                    Success = false,
+                    TicketNumber = "",
+                    Message = "Invalid issue response from Airtour API"
+                };
+            }
+        }
 
 
         public async Task<List<FlightOptionDto>> SearchAvailabilityAsync(SearchRequestDto request, CancellationToken ct = default)
