@@ -3,9 +3,8 @@
 
 namespace FlightBookingDomain.Entities
 {
-    public class FlightEntity
+    public class FlightEntity : BaseEntity
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
         public string Airline { get; set; }
         public string FlightNumber { get; set; }
         public DateTime DepartureTime { get; set; }

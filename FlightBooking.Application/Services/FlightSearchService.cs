@@ -1,7 +1,6 @@
 ﻿using FlightBookingApplication.Common;
 using FlightBookingApplication.DTOs.Search;
 using FlightBookingApplication.Interfaces;
-using FlightBookingApplication.Validators;
 using FluentValidation;
 
 namespace FlightBookingApplication.Services

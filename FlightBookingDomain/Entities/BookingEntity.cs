@@ -2,9 +2,8 @@
 
 namespace FlightBookingDomain.Entities
 {
-    public class BookingEntity
+    public class BookingEntity : BaseEntity
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
         public string FlightNumber { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public List<PassengerEntity> Passengers { get; set; }
